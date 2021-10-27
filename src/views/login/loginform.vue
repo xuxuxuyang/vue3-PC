@@ -1,7 +1,7 @@
 <template>
   <div class="login">
+    <LoginTitle />
     <div class="tab">
-      <h2 class="middle">美美子财务管理系统</h2>
       <el-tabs type="border-card" stretch>
         <!-- 账号密码登录 -->
         <el-tab-pane label="密码登录">
@@ -38,7 +38,7 @@
         <!-- 验证码登录 -->
         <el-tab-pane label="手机登录">
           <el-form
-            ref="snedLoginForm"
+            ref="sendLoginForm"
             :model="ruleForm"
             status-icon
             :rules="rules"
@@ -59,7 +59,7 @@
               <el-button @click="send" class="sendbtn">获取验证码</el-button>
             </div>
             <el-form-item>
-              <el-button type="primary" @click="login" class="loginbtn"
+              <el-button type="primary" @click="sendlogin" class="loginbtn"
                 >登录</el-button
               >
               <el-button @click="resetForm" class="resetbtn">重置</el-button>
@@ -69,58 +69,66 @@
       </el-tabs>
     </div>
   </div>
+  <LoginSave />
 </template>
 
 <script>
+import LoginTitle from './logintitle.vue'
+import LoginSave from './loginsave.vue'
 export default {
+  components: {
+    LoginTitle,
+    LoginSave
+  },
   data() {
-    const namerule = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入账号'))
-      } else {
-        if (this.ruleForm.name !== 'xuyang') {
-          callback(new Error('请输入正确的账号'))
-        } else {
-          // this.$refs.LoginForm.validateField('name')
-        }
-        callback()
-      }
-    }
-    const passwordrule = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else if (this.ruleForm.password !== '123') {
-        callback(new Error('请输入正确的密码'))
-      } else {
-        callback()
-      }
-    }
-    const sendrule = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入验证码'))
-      } else if (this.ruleForm.send !== '123') {
-        callback(new Error('请输入正确的验证码'))
-      } else {
-        callback()
-      }
-    }
     return {
       ruleForm: {
         name: '',
-        password: ''
-      },
-      sendruleForm: {
-        name: '',
+        password: '',
         send: ''
       },
       rules: {
-        name: [{ validator: namerule, trigger: 'blur' }],
-        password: [{ validator: passwordrule, trigger: 'blur' }],
-        send: [{ validator: sendrule, trigger: 'blur' }]
+        name: [
+          {
+            required: true,
+            message: '请填写用户名',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-z0-9]{5,10}$/,
+            message: '用户名必须是5~10个字符',
+            trigger: 'blur'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请填写密码',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-z0-9]{6,}$/,
+            message: '密码必须是6位以上的字母或数字',
+            trigger: 'blur'
+          }
+        ],
+        send: [
+          {
+            required: true,
+            message: '请填写验证码',
+            trigger: 'blur'
+          },
+          {
+            pattern: /^[a-z0-9]{4,}$/,
+            message: '验证码为4位数字',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
   methods: {
+    // 登录
     login() {
       this.$refs.LoginForm.validate((valid) => {
         if (valid) {
@@ -131,19 +139,30 @@ export default {
         }
       })
     },
+    sendlogin() {
+      this.$refs.sendLoginForm.validate((valid) => {
+        if (valid) {
+          alert('登录成功')
+        } else {
+          console.log('登录失败')
+          return false
+        }
+      })
+    },
+    // 发送验证码
     send() {
       alert('发送验证码!')
     },
-
+    // 重置表单
     resetForm() {
       this.$refs.LoginForm.resetFields()
-      this.$refs.snedLoginForm.resetFields()
+      this.$refs.sendLoginForm.resetFields()
     }
   }
 }
 </script>
 
-<style scope="less">
+<style scope>
 .demo-ruleForm {
   margin-top: 20px;
   width: 350px;
