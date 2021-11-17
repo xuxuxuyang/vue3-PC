@@ -1,7 +1,14 @@
 const path = require('path')
+// const Components = require('unplugin-vue-components/webpack')
+// const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = {
   outputDir: './build',
+  // plugins: [           //按需引入ElementPlus组件的插件配置(官网)
+  //   Components({
+  //     resolvers: [ElementPlusResolver()]
+  //   })
+  // ],
   // configureWebpack: {
   //   resolve: {
   //     alias: {
