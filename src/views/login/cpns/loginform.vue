@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <LoginTitle />
+    <h2 class="middle">美美子财务管理系统</h2>
     <div class="tab">
       <el-tabs type="border-card" stretch>
         <!-- 账号密码登录 -->
@@ -25,6 +25,7 @@
                 v-model="ruleForm.password"
                 type="password"
                 autocomplete="off"
+                show-password
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -69,22 +70,16 @@
       </el-tabs>
     </div>
   </div>
-  <LoginSave />
 </template>
 
 <script>
-import LoginTitle from './logintitle.vue'
-import LoginSave from './loginsave.vue'
+import localStorage from 'utils/localStorage.js'
 export default {
-  components: {
-    LoginTitle,
-    LoginSave
-  },
   data() {
     return {
       ruleForm: {
-        name: '',
-        password: '',
+        name: localStorage.get('name') || '',
+        password: localStorage.get('password') || '',
         send: ''
       },
       rules: {
@@ -131,10 +126,20 @@ export default {
     // 登录
     login() {
       this.$refs.LoginForm.validate((valid) => {
+        //valid返回验证是否通过的布尔值
         if (valid) {
+          //第一步：拿到VueX中保存是否记住密码的状态
+          if (this.$store.state.issave) {
+            localStorage.save('name', this.ruleForm.name)
+            localStorage.save('password', this.ruleForm.password)
+            alert('密码存到本地成功')
+          }
+          //第二步 登录
           alert('登录成功')
         } else {
-          console.log('登录失败')
+          // 登录失败 清空本地保存
+          localStorage.clear()
+          alert('登录失败')
           return false
         }
       })
@@ -142,9 +147,9 @@ export default {
     sendlogin() {
       this.$refs.sendLoginForm.validate((valid) => {
         if (valid) {
-          alert('登录成功')
+          alert('验证码登录')
         } else {
-          console.log('登录失败')
+          alert('验证码登录失败')
           return false
         }
       })
