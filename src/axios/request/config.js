@@ -1,14 +1,10 @@
-import axios from 'axios'
-
 // 配置默认的baseURL和超时时间
 let baseURL = ''
 let Timeout = 10000
-axios.defaults.baseURL = 'http://123.207.32.32:8000'
 if (process.env.NODE_ENV === 'development') {
-  baseURL = 'http://123.207.32.32:8000'
+  baseURL = 'http://152.136.185.210:5000'
+  // baseURL = 'http://39.98.123.211'
 } else if (process.env.NODE_ENV === 'production') {
-  baseURL = 'http://123.207.32.32:8000'
+  baseURL = 'http://152.136.185.210:5000'
 }
-axios.defaults.baseURL = baseURL
-axios.defaults.timeout = Timeout
 export { baseURL, Timeout }

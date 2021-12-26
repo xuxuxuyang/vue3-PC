@@ -24,8 +24,17 @@ module.exports = {
   // },
   chainWebpack: (config) => {
     config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'))
-      .set('views', '@/views')
+      .set('@', path.resolve(__dirname, 'src')) //只有@有代码提示
+      .set('views', '@/views') //views没有代码提示 其他也是
       .set('utils', '@/utils')
   }
+  // 配置跨域
+  // devServer: {
+  //   proxy: {
+  //     '/test': {
+  //       //前端发请求，只要带有这个路径就代理
+  //       target: 'http://152.136.185.210:5000'
+  //     }
+  //   }
+  // }
 }

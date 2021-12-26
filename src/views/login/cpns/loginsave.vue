@@ -15,12 +15,12 @@
 export default {
   data() {
     return {
-      checked: ''
+      checked: true
     }
   },
   methods: {
     savepassword() {
-      this.$store.commit('savepassword', this.checked) //把是否记住密码的状态存入vueX
+      this.$store.commit('login/savepassword', this.checked) //把是否记住密码的状态存入vueX
     }
   }
 }

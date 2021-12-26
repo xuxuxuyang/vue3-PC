@@ -1,16 +1,15 @@
 import { createStore } from 'vuex'
 
+//导入模块小仓库
+import login from './modules/login'
+
 export default createStore({
   state: () => {
-    return {
-      issave: true
-    }
+    return {}
   },
-  mutations: {
-    savepassword(state, value) {
-      state.issave = value
-    }
-  },
+  mutations: {},
   actions: {},
-  modules: {}
+  modules: {
+    login
+  }
 })

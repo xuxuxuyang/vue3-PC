@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h2 class="middle">美美子财务管理系统</h2>
+    <h2 class="middle">后台管理系统</h2>
     <div class="tab">
       <el-tabs type="border-card" stretch>
         <!-- 账号密码登录 -->
@@ -123,27 +123,30 @@ export default {
     }
   },
   methods: {
-    // 登录
+    // 密码登录
     login() {
       this.$refs.LoginForm.validate((valid) => {
         //valid返回验证是否通过的布尔值
         if (valid) {
-          //第一步：拿到VueX中保存是否记住密码的状态
-          if (this.$store.state.issave) {
-            localStorage.save('name', this.ruleForm.name)
-            localStorage.save('password', this.ruleForm.password)
-            alert('密码存到本地成功')
+          //第一步： 带着账号密码发送请求 获取用户token公共状态 具体在VueX中操作
+          this.$store.dispatch('login/token', {
+            name: 'codertest', //这里应该v-modle 表单数据传参
+            password: '123456'
+          })
+          //第二步：拿到VueX中保存是否记住密码的状态
+          if (this.$store.state.login.issave) {
+            localStorage.set('name', this.ruleForm.name)
+            localStorage.set('password', this.ruleForm.password)
           }
-          //第二步 登录
-          alert('登录成功')
         } else {
-          // 登录失败 清空本地保存
+          // 验证不通过 清空本地保存
           localStorage.clear()
-          alert('登录失败')
+          alert('验证不通过,登录失败')
           return false
         }
       })
     },
+    //验证码登陆
     sendlogin() {
       this.$refs.sendLoginForm.validate((valid) => {
         if (valid) {
