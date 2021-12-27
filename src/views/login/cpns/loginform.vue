@@ -129,7 +129,7 @@ export default {
         //valid返回验证是否通过的布尔值
         if (valid) {
           //第一步： 带着账号密码发送请求 获取用户token公共状态 具体在VueX中操作
-          this.$store.dispatch('login/token', {
+          this.$store.dispatch('login/tokens', {
             name: 'codertest', //这里应该v-modle 表单数据传参
             password: '123456'
           })

@@ -3,7 +3,6 @@ let baseURL = ''
 let Timeout = 10000
 if (process.env.NODE_ENV === 'development') {
   baseURL = 'http://152.136.185.210:5000'
-  // baseURL = 'http://39.98.123.211'
 } else if (process.env.NODE_ENV === 'production') {
   baseURL = 'http://152.136.185.210:5000'
 }

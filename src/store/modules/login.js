@@ -7,7 +7,7 @@ const login = {
   state: () => {
     return {
       token: '',
-      issave: '',
+      issave: true,
       userdata: ''
     }
   },
@@ -17,19 +17,15 @@ const login = {
       state.issave = issave
     },
     savetoken(state, token) {
-      state.issave = token
+      state.token = token
     },
     userdata(state, data) {
       state.userdata = data
     }
   },
   actions: {
-    //记住密码
-    savepassword({ commit }, issave) {
-      commit('savepassword', issave)
-    },
-    //用户登陆
-    async token({ commit }, payload) {
+    //用户点击登陆
+    async tokens({ commit }, payload) {
       console.log(payload, 888)
       const { token, id } = await gettoken(payload)
       // 1.拿到用户的token存入VueX中

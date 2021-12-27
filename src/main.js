@@ -17,10 +17,10 @@ import 'element-plus/dist/index.css'
 app.use(ElementPlus)
 
 //防止用户刷新页面VueX中数据丢失
-import utils from '@/utils/localStorage'
-store.dispatch('login/token', {
-  name: utils.get('name'),
-  password: utils.get('password')
-})
+// import utils from '@/utils/localStorage'
+// store.dispatch('login/tokens', {
+//   name: utils.get('name'),
+//   password: utils.get('password')
+// })
 //挂载到Html页面
 app.mount('#app')
